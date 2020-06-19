@@ -13,7 +13,7 @@ public class SplashActivity extends Activity {
 
         try {
             Thread.sleep(3000); //대기 초 설정
-            startActivity(new Intent(SplashActivity.this, MainActivity.class));
+            startActivity(new Intent(SplashActivity.this, PermissionActivity.class));
             finish();
         } catch (Exception e) {
             Log.e("Error", "SplashActivity ERROR", e);
