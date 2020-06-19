@@ -41,8 +41,8 @@ public class SnowNotificationListenerService extends NotificationListenerService
         Log.i("NotificationListener", "[snowdeer] PackageName:" + sbn.getPackageName());
         Log.i("NotificationListener", "[snowdeer] PostTime:" + sbn.getPostTime());
 
-        Notification notificatin = sbn.getNotification();
-        Bundle extras = notificatin.extras;
+        Notification notification = sbn.getNotification();
+        Bundle extras = notification.extras;
         String title = extras.getString(Notification.EXTRA_TITLE);
         //int smallIconRes = extras.getInt(Notification.EXTRA_SMALL_ICON);
         //Bitmap largeIcon = ((Bitmap) extras.getParcelable(Notification.EXTRA_LARGE_ICON));

@@ -12,7 +12,7 @@ public class SplashActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         try {
-            Thread.sleep(1000); //대기 초 설정
+            Thread.sleep(3000); //대기 초 설정
             startActivity(new Intent(SplashActivity.this, MainActivity.class));
             finish();
         } catch (Exception e) {

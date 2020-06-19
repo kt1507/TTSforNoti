@@ -19,6 +19,9 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS");
             startActivity(intent);
         }
+
+
+        Intent intent = new Intent(getApplicationContext(),AppListActivity.class);
     }
 
     private boolean isNotiPermissionAllowed() {
