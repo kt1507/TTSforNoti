@@ -1,6 +1,7 @@
 package com.example.ttsfornoti;
 
 import android.app.Notification;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -8,9 +9,12 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 
-public class SnowNotificationListenerService extends NotificationListenerService {
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+
+public class SnowNotificationListenerService extends NotificationListenerService{
 
     private String TTS_Data;
 
@@ -66,7 +70,7 @@ public class SnowNotificationListenerService extends NotificationListenerService
 
         Log.i("NotificationListener", "[snowdeer] AppLabel:" + Applabel);
 
-        //데이터 넘기기
+        //데이터 합치기
         TTS_Data = Applabel;
 
         if(text != null) {
@@ -76,6 +80,28 @@ public class SnowNotificationListenerService extends NotificationListenerService
             TTS_Data = TTS_Data + " " + subText;
         }
         Log.i("NotificationListener", "[snowdeer] TTS_Data:" + TTS_Data);
+
+        //((TextToSpeechActivity)TextToSpeechActivity.mContext).speakJust(TTS_Data);
+
+        //값 전달하기
+        Intent intent = new Intent(this,TextToSpeechActivity.class);
+        intent.putExtra("TTS_Data",TTS_Data);
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+
+
+        try
+        {
+            pendingIntent.send();
+        }
+        catch(PendingIntent.CanceledException e)
+        {
+            e.printStackTrace();
+        }
+
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+
     }
 
     @Override
