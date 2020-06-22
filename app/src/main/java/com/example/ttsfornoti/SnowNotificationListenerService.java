@@ -84,23 +84,9 @@ public class SnowNotificationListenerService extends NotificationListenerService
         //((TextToSpeechActivity)TextToSpeechActivity.mContext).speakJust(TTS_Data);
 
         //값 전달하기
-        Intent intent = new Intent(this,TextToSpeechActivity.class);
+        Intent intent = new Intent(this,TTSService.class);
         intent.putExtra("TTS_Data",TTS_Data);
-
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
-
-
-        try
-        {
-            pendingIntent.send();
-        }
-        catch(PendingIntent.CanceledException e)
-        {
-            e.printStackTrace();
-        }
-
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
+        startService(intent);
 
     }
 
