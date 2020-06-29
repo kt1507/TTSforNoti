@@ -1,7 +1,6 @@
 package com.example.ttsfornoti;
 
 import android.app.Notification;
-import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -12,11 +11,15 @@ import android.service.notification.StatusBarNotification;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 
-import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.Locale;
+
+import static android.speech.tts.TextToSpeech.ERROR;
 
 public class SnowNotificationListenerService extends NotificationListenerService{
 
-    private String TTS_Data;
+    public static String TTS_Data;
 
     @Override
     public void onCreate() {
@@ -83,11 +86,14 @@ public class SnowNotificationListenerService extends NotificationListenerService
 
         //((TextToSpeechActivity)TextToSpeechActivity.mContext).speakJust(TTS_Data);
 
-        //값 전달하기
-        Intent intent = new Intent(this,TTSService.class);
-        intent.putExtra("TTS_Data",TTS_Data);
-        startService(intent);
-
+        if(TTS_Data != null) {
+            //값 전달하기
+            Intent intent = new Intent(this, TTSService.class);
+            intent.putExtra("TTS_Data", TTS_Data);
+            startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+        }
+        //TTSServicetest ttsServicetest = new TTSServicetest();
+        //ttsServicetest.Play(TTS_Data);
     }
 
     @Override
@@ -97,4 +103,49 @@ public class SnowNotificationListenerService extends NotificationListenerService
 
 
 }
+
+/*class TTSServicetest extends AppCompatActivity {
+
+    private static TextToSpeech tts;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        Log.e("TTSService", "TTS_onCreate()");
+
+    }
+
+    public void Play(String TTS_Data){
+
+        tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if(status != ERROR) {
+                    tts.setLanguage(Locale.KOREAN);
+                    Log.e("TTSService","TTS_onInit()");
+                }
+            }
+        });
+
+        Log.e("TTSService", "TTS_Play()");
+        Log.e("TTSService","TTSIntent" + TTS_Data);
+
+        tts.setPitch(1.0f);
+        tts.setSpeechRate(1.0f);
+        tts.speak(TTS_Data, TextToSpeech.QUEUE_FLUSH,null);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.e("TTSService", "TTS_onDestroy()");
+        if(tts != null){
+            tts.stop();
+            tts.shutdown();
+            tts = null;
+        }
+    }
+}*/
 

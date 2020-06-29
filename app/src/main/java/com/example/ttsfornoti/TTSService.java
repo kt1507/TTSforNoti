@@ -1,82 +1,26 @@
 package com.example.ttsfornoti;
 
-import android.app.IntentService;
 import android.content.Intent;
-import android.speech.tts.TextToSpeech;
+import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 
-import java.util.Locale;
+import androidx.appcompat.app.AppCompatActivity;
 
-public class TTSService extends IntentService {
-    public TTSService(String name) {
-        super(name);
-    }
-
-    public TextToSpeech tts;
+public class TTSService extends AppCompatActivity {
 
     @Override
-    protected void onHandleIntent(final Intent workIntent) {
-        // Gets data from the incoming Intent
-        final String TTS_Data = workIntent.getDataString();
-        // Do work here, based on the contents of dataString
-        Log.e("TTS", "TTS onHandleIntent");
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
-        tts = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
-            @Override
-            public void onInit(int status) {
-                // TODO Auto-generated method stub
+        Log.i("TTSService","onCreate()");
 
-                if (status == TextToSpeech.SUCCESS) {
+        TextView tx1 = (TextView)findViewById(R.id.textview01);
 
-                    Log.e("TTS", "TTS SUCCESS");
+        Intent intent = getIntent();
 
-                    // 한국어 설정
-                    int result = tts.setLanguage(Locale.KOREAN);
-
-                    tts.setPitch(5); // set pitch level
-                    tts.setSpeechRate(2); // set speech speed rate
-
-                    // 한국어가 안된다면,
-                    if (result == TextToSpeech.LANG_MISSING_DATA
-                            || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-                        Log.e("TTS", "Language is not supported");
-                    }
-                    else {
-                        speakJust(TTS_Data);
-                    }
-                } else {
-                    Log.e("TTS", "Initilization Failed");
-                }
-            }
-        });
-    }
-
-    public void speakJust(String text) {
-
-        int result = tts.setLanguage(Locale.KOREAN);
-
-        // tts가 사용중이면, 말하지않는다.
-        if(!tts.isSpeaking()) {
-            tts.speak(text, TextToSpeech.QUEUE_FLUSH, null);
-
-            Log.i("NotificationListener", "[snowdeer] TTS_text_speaking:" + text);
-
-            //Intent intent = new Intent(this,SnowNotificationListenerService.class);
-            //startActivity(intent);
-        }
-
-    }
-
-    @Override
-    public void onDestroy() {
-
-        // Don't forget to shutdown!
-        if (tts != null) {
-            tts.stop();
-            tts.shutdown();
-        }
-
-        super.onDestroy();
-
+        String TTS_Data = intent.getExtras().getString("TTS_Data");
+        tx1.setText(TTS_Data);
     }
 }
