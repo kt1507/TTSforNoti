@@ -36,9 +36,9 @@
             </intent-filter>
         </service>
 
-        <activity
+        <service
             android:name=".TTSService">
-        </activity>
+        </service>
     </application>
 
 </manifest>

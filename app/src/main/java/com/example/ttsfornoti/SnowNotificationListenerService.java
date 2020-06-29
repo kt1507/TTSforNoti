@@ -76,10 +76,13 @@ public class SnowNotificationListenerService extends NotificationListenerService
         //데이터 합치기
         TTS_Data = Applabel;
 
+        if(title != null){
+            TTS_Data = TTS_Data + " " + title;
+        }
         if(text != null) {
             TTS_Data = TTS_Data + " " + text;
         }
-        else if(subText != null) {
+        if(subText != null) {
             TTS_Data = TTS_Data + " " + subText;
         }
         Log.i("NotificationListener", "[snowdeer] TTS_Data:" + TTS_Data);
@@ -90,7 +93,7 @@ public class SnowNotificationListenerService extends NotificationListenerService
             //값 전달하기
             Intent intent = new Intent(this, TTSService.class);
             intent.putExtra("TTS_Data", TTS_Data);
-            startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+            startService(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
         }
         //TTSServicetest ttsServicetest = new TTSServicetest();
         //ttsServicetest.Play(TTS_Data);
