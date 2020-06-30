@@ -9,7 +9,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ListView;
-import java.util.Collections;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -29,13 +28,6 @@ public class MainActivity extends AppCompatActivity {
         //리스트뷰 참조 및 Adapter 달기
         listview = (ListView) findViewById(R.id.listview);
         listview.setAdapter(adapter);
-/*
-        adapter.addItem("제목1", R.drawable.hannam_logo, "내용1");
-        adapter.addItem("제목2", R.drawable.hannam_logo, "내용2");
-        adapter.addItem("제목3", R.drawable.hannam_logo, "내용3");
-        adapter.addItem("제목4", R.drawable.hannam_logo, "내용4");
-        adapter.addItem("제목5", R.drawable.hannam_logo, "내용5");
-*/
 
         // 설치된 앱 목록 가져오기
         Intent intent = new Intent(Intent.ACTION_MAIN);

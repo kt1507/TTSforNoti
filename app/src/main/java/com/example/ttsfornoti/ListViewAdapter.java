@@ -1,6 +1,7 @@
 package com.example.ttsfornoti;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -100,6 +100,13 @@ public class ListViewAdapter extends BaseAdapter {
                         }
                     }
                 }//if
+
+                //값 전달하기
+                Intent intent = new Intent(buttonView.getContext(), TTSService.class);
+                intent.putExtra("Check_Appname_length", Check_Appname.length);
+                intent.putExtra("Check_Appname",Check_Appname);
+                context.startService(intent);
+
             }//onCheckedChanged
         });//setOnCheckedChangeListener
 
