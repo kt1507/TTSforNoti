@@ -1,6 +1,7 @@
 package com.example.ttsfornoti;
 
 import android.graphics.drawable.Drawable;
+import android.widget.Switch;
 
 public class ListViewItem {
 

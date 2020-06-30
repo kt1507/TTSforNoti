@@ -52,7 +52,7 @@ public class ListViewAdapter extends BaseAdapter {
         iconImageView = (ImageView) convertView.findViewById(R.id.icon);
         switchView = (Switch) convertView.findViewById(R.id.switch1);
 
-        ListViewItem listViewItem = listViewItemList.get(position);
+        final ListViewItem listViewItem = listViewItemList.get(position);
 
         // 아이템 내 각 위젯에 데이터 반영
         titleTextView.setText(listViewItem.getTitle());
