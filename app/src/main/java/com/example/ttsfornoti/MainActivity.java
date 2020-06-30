@@ -9,6 +9,10 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ListView;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -20,7 +24,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         //Adapter 생성
         adapter = new ListViewAdapter();
@@ -35,6 +38,15 @@ public class MainActivity extends AppCompatActivity {
 
         PackageManager packageManager = getPackageManager();
         List<ResolveInfo> list =  packageManager.queryIntentActivities(intent, 0);
+
+        Collections.sort(list,new Comparator<ResolveInfo>(){
+            public int compare(ResolveInfo a, ResolveInfo b){
+                PackageManager pm = getPackageManager();
+                return String.CASE_INSENSITIVE_ORDER.compare(
+                        a.loadLabel(pm).toString(),
+                        b.loadLabel(pm).toString());
+            }
+        });
 
         for (ResolveInfo info : list) {
             String appActivity = info.activityInfo.name;

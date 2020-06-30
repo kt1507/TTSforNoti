@@ -60,10 +60,6 @@ public class TTSService extends Service {
             Log.i("TTSService","Check_Appname_Length : " + Check_Appname_Length);
             Log.i("TTSService","TTS_Data : " + TTS_Data);
 
-            /*for(int i = 0; i < Check_Appname_Length; i++){
-                Log.i("TTSService", "Check_Appname["+i+"]" + Check_Appname[i]);
-            }*/
-
             for(int i = 0; i < Check_Appname_Length; i++){
                 if(Check_Appname[i] != null && Check_Appname[i].equals(App_name)){
                     tts.speak(TTS_Data, TextToSpeech.QUEUE_ADD, null);
