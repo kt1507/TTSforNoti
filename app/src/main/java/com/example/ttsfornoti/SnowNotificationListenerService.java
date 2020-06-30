@@ -8,14 +8,7 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
-import android.speech.tts.TextToSpeech;
 import android.util.Log;
-
-import androidx.appcompat.app.AppCompatActivity;
-
-import java.util.Locale;
-
-import static android.speech.tts.TextToSpeech.ERROR;
 
 public class SnowNotificationListenerService extends NotificationListenerService{
 

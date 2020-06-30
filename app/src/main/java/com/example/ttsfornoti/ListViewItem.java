@@ -1,26 +1,21 @@
 package com.example.ttsfornoti;
 
+import android.graphics.drawable.Drawable;
+
 public class ListViewItem {
 
-    private int iconDrawable;
-    private String contentStr;
+    private Drawable iconDrawable;
     private String titleStr;
 
     public void setTitle(String title){
         titleStr = title;
     }
-    public void setIcon(int icon){
+    public void setIcon(Drawable icon){
         iconDrawable = icon;
     }
-    public void setContent(String content){
-        contentStr = content;
-    }
 
-    public int getIcon(){
+    public Drawable getIcon(){
         return this.iconDrawable;
-    }
-    public String getContent(){
-        return this.contentStr;
     }
     public String getTitle(){
         return this.titleStr;

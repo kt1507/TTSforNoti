@@ -1,12 +1,16 @@
 package com.example.ttsfornoti;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -15,18 +19,17 @@ public class ListViewAdapter extends BaseAdapter {
 
     private ImageView iconImageView;
     private TextView titleTextView;
-    private TextView contentTextView;
+    private Switch switchView;
+    public String[] Check_Appname = new String[100];
 
     //Adapter에 추가된 데이터를 저장하기 위한 ArrayList
     private ArrayList<ListViewItem> listViewItemList = new ArrayList<ListViewItem>();
 
     //ListviewAdapter의 생성자
     public ListViewAdapter(){
-
     }
 
     //Adapter에 사용되는 데이터의 개수를 리턴
-
     @Override
     public int getCount(){
         return listViewItemList.size();
@@ -34,7 +37,7 @@ public class ListViewAdapter extends BaseAdapter {
 
     //position에 위치한 데이터를 화면에 출력하는데 사용될 View를 리턴
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         final int pos = position;
         final Context context = parent.getContext();
 
@@ -47,17 +50,61 @@ public class ListViewAdapter extends BaseAdapter {
         //화면에 표시될 View(Layout이 inflate된)으로부터 위젯에 대한 참조 획득
         titleTextView = (TextView) convertView.findViewById(R.id.title);
         iconImageView = (ImageView) convertView.findViewById(R.id.icon);
-        contentTextView = (TextView) convertView.findViewById(R.id.content);
+        switchView = (Switch) convertView.findViewById(R.id.switch1);
 
         ListViewItem listViewItem = listViewItemList.get(position);
 
         // 아이템 내 각 위젯에 데이터 반영
         titleTextView.setText(listViewItem.getTitle());
-        iconImageView.setImageResource(listViewItem.getIcon());
-        contentTextView.setText(listViewItem.getContent());
+        iconImageView.setImageDrawable(listViewItem.getIcon());
+
+        //스위치 작동
+        switchView.setOnCheckedChangeListener(new Switch.OnCheckedChangeListener(){
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                //스위치 체크 Up
+                if(isChecked == true) {
+                    //체크 된 리스트의 Appname 가져옴
+                    String Appname =  listViewItemList.get(pos).getTitle();
+                    Log.i("App_List", "Check Up : " + Appname);
+
+                    int check_size = 0;
+                    Log.i("AppList","check_size : " + check_size);
+
+                    //Check_Appname 배열에 동일한 Appname이 있으면 check_size 1 증가
+                    for(int i = 0; i < Check_Appname.length; i++){
+                        if(Appname.equals(Check_Appname[i])){
+                            check_size++;
+                            Log.i("AppList","check_size++ : " + check_size);
+                        }
+                    }
+                    //check_size가 1이 아니면 Check_Appname 배열에 추가
+                    if(check_size != 1){
+                        for(int i = 0; i < Check_Appname.length; i++){
+                            if(Check_Appname[i] == null){
+                                Check_Appname[i] = Appname;
+                                Log.i("AppList","Check_Appname[" + i + "] : " + Check_Appname[i]);
+                                break;
+                            }
+                        }
+                    }
+                }//if
+                //스위치 체크 down
+                if(isChecked == false){
+                    String Appname =  listViewItemList.get(pos).getTitle();
+
+                    for(int i = 0; i < Check_Appname.length; i++){
+                        if(Appname.equals(Check_Appname[i])){
+                            Log.i("AppList","Check_Appname[" + i + "]_" + Appname + " -> null");
+                            Check_Appname[i] = null;
+                        }
+                    }
+                }//if
+            }//onCheckedChanged
+        });//setOnCheckedChangeListener
 
         return convertView;
-    }
+    }//getView
 
     //지정한 위치(position)에 있는 데이터 리턴
     @Override
@@ -71,12 +118,11 @@ public class ListViewAdapter extends BaseAdapter {
         return position;
     }
 
-    public void addItem(String title, int icon, String content){
+    public void addItem(String title, Drawable icon){
         ListViewItem item = new ListViewItem();
 
         item.setTitle(title);
         item.setIcon(icon);
-        item.setContent(content);
 
         listViewItemList.add(item);
     }
