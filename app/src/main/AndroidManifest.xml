@@ -25,6 +25,10 @@
         </activity>
 
         <activity
+            android:name=".Credit">
+        </activity>
+
+        <activity
             android:name=".PermissionActivity">
         </activity>
 

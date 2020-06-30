@@ -8,6 +8,8 @@ import android.content.pm.ResolveInfo;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.Collection;
@@ -37,10 +39,11 @@ public class MainActivity extends AppCompatActivity {
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
 
         PackageManager packageManager = getPackageManager();
-        List<ResolveInfo> list =  packageManager.queryIntentActivities(intent, 0);
+        List<ResolveInfo> list = packageManager.queryIntentActivities(intent, 0);
 
-        Collections.sort(list,new Comparator<ResolveInfo>(){
-            public int compare(ResolveInfo a, ResolveInfo b){
+        //list 오름차순 정렬
+        Collections.sort(list, new Comparator<ResolveInfo>() {
+            public int compare(ResolveInfo a, ResolveInfo b) {
                 PackageManager pm = getPackageManager();
                 return String.CASE_INSENSITIVE_ORDER.compare(
                         a.loadLabel(pm).toString(),
@@ -61,6 +64,18 @@ public class MainActivity extends AppCompatActivity {
 
         }
         adapter.notifyDataSetChanged(); //어댑터의 변경을 알림
-    }
 
+
+        findViewById(R.id.button01).setOnClickListener(mClickListener);
+
+        Button button = (Button) findViewById(R.id.button01);
+
+
+    }
+    Button.OnClickListener mClickListener = new Button.OnClickListener(){
+        @Override
+        public void onClick(View view) {
+            startActivity(new Intent(MainActivity.this, Credit.class));
+        }
+    };
 }
